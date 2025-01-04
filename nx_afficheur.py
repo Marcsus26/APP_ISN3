@@ -17,4 +17,4 @@ def afficher_graphe(depart, arrivee):
         print("Pas de chemin trouvé")
         return False
 
-# afficher_graphe('cardon', 'menthe')
+# afficher_graphe('prunier', 'sauge')
