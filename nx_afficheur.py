@@ -22,4 +22,4 @@ def afficher_graphe(liste_départs_arrivees):
     #     print("Pas de chemin trouvé")
     #     return False
 
-afficher_graphe([('prunier', 'sauge'), ('pissenlit', 'trefle blanc')]) 
+# afficher_graphe([('prunier', 'sauge'), ('pissenlit', 'trefle blanc')]) 
