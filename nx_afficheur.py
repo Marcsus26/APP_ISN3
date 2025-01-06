@@ -18,6 +18,9 @@ def afficher_graphe(liste_départs_arrivees):
             graphe_liste += calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][0], liste_départs_arrivees[i][1], calcul.sous_graphe_parents(liste_départs_arrivees[i][0], calcul.csv_to_dict_favorise('data_arcs.csv')))
             if boolean2:
                 graphe_liste += calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][1], liste_départs_arrivees[i][0], calcul.sous_graphe_parents(liste_départs_arrivees[i][1], calcul.csv_to_dict_favorise('data_arcs.csv')))
+        else:
+            print("Pas de chemin trouvé qui satisfait les conditions")
+            return False
     G = nx.DiGraph()
     for i in range(len(graphe_liste) - 1):
         if graphe_liste[i] != graphe_liste[i + 1]:
@@ -26,8 +29,5 @@ def afficher_graphe(liste_départs_arrivees):
     nx.draw(G, pos, with_labels=True, node_size=1400, node_color='skyblue', font_color='black', font_weight='bold', arrowsize = 20)
     plt.show()
     return True
-    # else:
-    #     print("Pas de chemin trouvé")
-    #     return False
 
 # afficher_graphe([('prunier', 'sauge'), ('pissenlit', 'trefle blanc'), ('pomme de terre','poivron')]) 
