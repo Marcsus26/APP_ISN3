@@ -17,3 +17,8 @@
 ## Not implemented
 
 - GUI to select ingredients with tkinter
+<footer>
+<p align="center">
+     ❤️ Made with love by Marc
+</p>
+</footer>
