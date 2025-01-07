@@ -1,4 +1,5 @@
 import csv
+from math import inf
 
 def csv_to_dict_favorise(file_name):
     dict = {}
@@ -58,3 +59,41 @@ def calcul_liste_longueurs(liste_paires_depart_arrivee):
         else:
             l.append(len(calcul_plus_court_chemin(paire[0], paire[1], sous_graphe_parents(paire[0], csv_to_dict_favorise('data_arcs.csv')))))
     return l
+
+def dijkstra(graph,start,goal):
+    shortest_distance = {}
+    predecessor = {}
+    unseenNodes = graph
+    infinity = inf
+    path = []
+    for node in unseenNodes:
+        shortest_distance[node] = infinity
+    shortest_distance[start] = 0
+
+    # Determine which is minimum node. What does that mean?
+    while unseenNodes:
+        minNode = None
+        for node in unseenNodes:
+            if minNode is None:
+                minNode = node
+            elif shortest_distance[node] < shortest_distance[minNode]:
+                minNode = node
+
+        for edge, weight in graph[minNode].items():
+            if weight + shortest_distance[minNode] < shortest_distance[edge]:
+                shortest_distance[edge] = weight + shortest_distance[minNode]
+                predecessor[edge] = minNode
+        unseenNodes.pop(minNode)
+
+    currentNode = goal
+    while currentNode != start:
+        try:
+            path.insert(0,currentNode)
+            currentNode = predecessor[currentNode]
+        except KeyError:
+            print('Path not reachable')
+            break
+    path.insert(0,start)
+    if shortest_distance[goal] != infinity:
+        print('Shortest distance is ' + str(shortest_distance[goal]))
+        print('And the path is ' + str(path))
