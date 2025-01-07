@@ -30,4 +30,4 @@ def afficher_graphe(liste_départs_arrivees):
     plt.show()
     return True
 
-afficher_graphe([('prunier', 'sauge'), ('pissenlit', 'trefle blanc')])
+# afficher_graphe([('prunier', 'sauge'), ('pissenlit', 'trefle blanc')])
