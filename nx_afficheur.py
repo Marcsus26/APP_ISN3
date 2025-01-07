@@ -10,7 +10,7 @@ def afficher_graphe(liste_départs_arrivees):
         boolean2 = calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][1], liste_départs_arrivees[i][0], calcul.sous_graphe_parents(liste_départs_arrivees[i][1], calcul.csv_to_dict_favorise('data_arcs.csv'))) is not None
         boolean3 = boolean1 and boolean2
         # print(graphe_liste)
-        if i == 0 and boolean3 and len(set(calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][0], liste_départs_arrivees[i][1], calcul.sous_graphe_parents(liste_départs_arrivees[i][0], calcul.csv_to_dict_favorise('data_arcs.csv')))).intersection(set(graphe_liste))) != set() and len(set(calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][1], liste_départs_arrivees[i][0], calcul.sous_graphe_parents(liste_départs_arrivees[i][1], calcul.csv_to_dict_favorise('data_arcs.csv')))).intersection(set(graphe_liste))) != set():
+        if i == 0 and boolean3:
             graphe_liste += calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][0], liste_départs_arrivees[i][1], calcul.sous_graphe_parents(liste_départs_arrivees[i][0], calcul.csv_to_dict_favorise('data_arcs.csv')))
             if boolean2:
                 graphe_liste += calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][1], liste_départs_arrivees[i][0], calcul.sous_graphe_parents(liste_départs_arrivees[i][1], calcul.csv_to_dict_favorise('data_arcs.csv')))
@@ -30,4 +30,4 @@ def afficher_graphe(liste_départs_arrivees):
     plt.show()
     return True
 
-# afficher_graphe([('prunier', 'sauge'), ('pissenlit', 'trefle blanc'), ('pomme de terre','poivron')]) 
+# afficher_graphe([('prunier', 'sauge'), ('pissenlit', 'trefle blanc')])
