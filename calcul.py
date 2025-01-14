@@ -1,3 +1,5 @@
+# numéro groupe : 94
+
 import csv
 from math import inf
 
@@ -10,6 +12,17 @@ def csv_to_dict_favorise(file_name):
                 dict[row[0]] = [row[2]]
             elif row[1] == 'favorise':
                 dict[row[0]].append(row[2])
+    return dict
+
+def data_arcs_poids_to_dict(file_name):
+    dict = {}
+    with open(file_name, mode='r') as infile:
+        reader = csv.reader(infile, delimiter=';')
+        for row in reader:
+            if dict.get(row[0]) == None and row[1] == 'favorise':
+                dict[row[0]] = {row[2]:int(row[3])}
+            elif row[1] == 'favorise':
+                dict[row[0]][row[2]] = int(row[3])
     return dict
 
 def sous_graphe_parents(s_init, adj):
@@ -66,7 +79,7 @@ def dijkstra(graph,start,goal):
     unseenNodes = graph
     infinity = inf
     path = []
-    for node in unseenNodes:
+    for node in graph.keys():
         shortest_distance[node] = infinity
     shortest_distance[start] = 0
     while unseenNodes:
@@ -78,7 +91,9 @@ def dijkstra(graph,start,goal):
                 minNode = node
 
         for childNode, weight in graph[minNode].items():
-            if weight + shortest_distance[minNode] < shortest_distance[childNode]:
+            if shortest_distance.get(childNode) is None or shortest_distance.get(minNode) is None:
+                pass
+            elif weight + shortest_distance[minNode] < shortest_distance[childNode]:
                 shortest_distance[childNode] = weight + shortest_distance[minNode]
                 predecessor[childNode] = minNode
         unseenNodes.pop(minNode)
@@ -94,3 +109,5 @@ def dijkstra(graph,start,goal):
     path.insert(0, start)
     if shortest_distance[goal] != infinity:
         return path
+    
+print(dijkstra(data_arcs_poids_to_dict('data_arcs_poids.csv'), 'prunier', 'sauge'))
