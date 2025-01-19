@@ -14,13 +14,19 @@ def afficher_graphe(liste_départs_arrivees):
             graphe_liste += calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][0], liste_départs_arrivees[i][1], calcul.sous_graphe_parents(liste_départs_arrivees[i][0], calcul.csv_to_dict_favorise('data_arcs.csv')))
             if boolean2:
                 graphe_liste += calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][1], liste_départs_arrivees[i][0], calcul.sous_graphe_parents(liste_départs_arrivees[i][1], calcul.csv_to_dict_favorise('data_arcs.csv')))
-        elif boolean3 and len(set(calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][0], liste_départs_arrivees[i][1], calcul.sous_graphe_parents(liste_départs_arrivees[i][0], calcul.csv_to_dict_favorise('data_arcs.csv')))).intersection(set(graphe_liste))) != set() and len(set(calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][1], liste_départs_arrivees[i][0], calcul.sous_graphe_parents(liste_départs_arrivees[i][1], calcul.csv_to_dict_favorise('data_arcs.csv')))).intersection(set(graphe_liste))) != set():
-            graphe_liste += calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][0], liste_départs_arrivees[i][1], calcul.sous_graphe_parents(liste_départs_arrivees[i][0], calcul.csv_to_dict_favorise('data_arcs.csv')))
-            if boolean2:
-                graphe_liste += calcul.calcul_plus_court_chemin(liste_départs_arrivees[i][1], liste_départs_arrivees[i][0], calcul.sous_graphe_parents(liste_départs_arrivees[i][1], calcul.csv_to_dict_favorise('data_arcs.csv')))
+        elif i >= 1 and len(calcul.find_all_paths_nx(calcul.csv_to_dict_favorise("data_arcs.csv"), liste_départs_arrivees[i][0], liste_départs_arrivees[i][1])) != 0 and len(calcul.find_all_paths_nx(calcul.csv_to_dict_favorise("data_arcs.csv"), liste_départs_arrivees[i][1], liste_départs_arrivees[i][0])) != 0 :
+            for path in calcul.find_all_paths_nx(calcul.csv_to_dict_favorise("data_arcs.csv"), liste_départs_arrivees[i][0], liste_départs_arrivees[i][1]):
+                if len(set(path).intersection(set(graphe_liste))) != set():
+                    graphe_liste += path
+                    break
+            for path in calcul.find_all_paths_nx(calcul.csv_to_dict_favorise("data_arcs.csv"), liste_départs_arrivees[i][1], liste_départs_arrivees[i][0]):
+                if len(set(path).intersection(set(graphe_liste))) != set():
+                    graphe_liste += path
+                    break
         else:
-            print("Pas de chemin trouvé qui satisfait les conditions")
+            print("Pas de chemin trouvé qui satisfait toutes les conditions")
             return False
+        
     G = nx.DiGraph()
     for i in range(len(graphe_liste) - 1):
         if graphe_liste[i] != graphe_liste[i + 1]:
@@ -42,10 +48,15 @@ def afficher_graphe_dijkstra(liste_départs_arrivees):
             graphe_liste += calcul.dijkstra(calcul.data_arcs_poids_to_dict('data_arcs_poids.csv'),liste_départs_arrivees[i][0], liste_départs_arrivees[i][1])
             if boolean2:
                 graphe_liste += calcul.dijkstra(calcul.data_arcs_poids_to_dict('data_arcs_poids.csv'),liste_départs_arrivees[i][1], liste_départs_arrivees[i][0])
-        elif boolean3 and len(set(calcul.dijkstra(calcul.data_arcs_poids_to_dict('data_arcs_poids.csv'),liste_départs_arrivees[i][0], liste_départs_arrivees[i][1])).intersection(set(graphe_liste))) != set() and len(set(calcul.dijkstra(calcul.data_arcs_poids_to_dict('data_arcs_poids.csv'),liste_départs_arrivees[i][1], liste_départs_arrivees[i][0])).intersection(set(graphe_liste))) != set():
-            graphe_liste += calcul.dijkstra(calcul.data_arcs_poids_to_dict('data_arcs_poids.csv'),liste_départs_arrivees[i][0], liste_départs_arrivees[i][1])
-            if boolean2:
-                graphe_liste += calcul.dijkstra(calcul.data_arcs_poids_to_dict('data_arcs_poids.csv'),liste_départs_arrivees[i][1], liste_départs_arrivees[i][0])
+        elif i >= 1 and len(calcul.find_all_paths_nx(calcul.csv_to_dict_favorise("data_arcs.csv"), liste_départs_arrivees[i][0], liste_départs_arrivees[i][1])) != 0 and len(calcul.find_all_paths_nx(calcul.csv_to_dict_favorise("data_arcs.csv"), liste_départs_arrivees[i][1], liste_départs_arrivees[i][0])) != 0 :
+            for path in calcul.find_all_paths_nx(calcul.csv_to_dict_favorise("data_arcs.csv"), liste_départs_arrivees[i][0], liste_départs_arrivees[i][1]):
+                if len(set(path).intersection(set(graphe_liste))) != set():
+                    graphe_liste += path
+                    break
+            for path in calcul.find_all_paths_nx(calcul.csv_to_dict_favorise("data_arcs.csv"), liste_départs_arrivees[i][1], liste_départs_arrivees[i][0]):
+                if len(set(path).intersection(set(graphe_liste))) != set():
+                    graphe_liste += path
+                    break
         else:
             print("Pas de chemin trouvé qui satisfait les conditions")
             return False

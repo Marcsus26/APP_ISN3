@@ -2,6 +2,7 @@
 
 import csv
 from math import inf
+import networkx as nx
 
 def csv_to_dict_favorise(file_name):
     dict = {}
@@ -109,5 +110,19 @@ def dijkstra(graph,start,goal):
     path.insert(0, start)
     if shortest_distance[goal] != infinity:
         return path
-    
-print(dijkstra(data_arcs_poids_to_dict('data_arcs_poids.csv'), 'prunier', 'sauge'))
+
+def find_all_paths_nx(graph,strat,end):
+    G = nx.DiGraph()
+    G.add_nodes_from(list(graph.keys()))
+    for key in graph.keys():
+        for key2 in graph[key]:
+            G.add_edge(key,key2)
+    liste = list(nx.all_simple_paths(G,source=strat,target=end, cutoff=6))
+    liste.sort(key=len)
+    return liste
+
+# list = find_all_paths_nx(csv_to_dict_favorise('data_arcs.csv'),'menthe', 'cardon')
+# list.sort(key=len)
+# print(list)
+# for path in list:
+#     print(len(path), path)
